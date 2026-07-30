@@ -26,12 +26,13 @@ function App() {
       <div className="app-header">
         <div className="header-content">
           <a href="https://socify.io" className="logo-link" target="_blank" rel="noopener noreferrer">
-            <img src="https://socify.io/logo.png" alt="Socify Logo" className="logo" />
+            {/* Use Group.png placed in the public folder. If it's in src, import instead. */}
+            <img src="/Group.png" alt="Company Logo" className="logo" />
             <span className="logo-text">Socify</span>
           </a>
           <div className="header-text">
-            <h1>SOC 2 Trust Readiness</h1>
-            <p>Discover Your Security Maturity Level</p>
+            <h1>SOC 2 Trust Readiness Challenge</h1>
+            <p>How ready is your company for enterprise security reviews?</p>
           </div>
         </div>
       </div>
@@ -44,7 +45,7 @@ function App() {
       </div>
       <div className="app-footer">
         <div className="footer-content">
-          <p>&copy; 2026 Socify. All rights reserved.</p>
+          <p>Discover your SOC 2 Trust Readiness Score — take the 2-minute challenge.</p>
           <a href="https://socify.io" target="_blank" rel="noopener noreferrer" className="footer-link">Visit socify.io</a>
         </div>
       </div>
