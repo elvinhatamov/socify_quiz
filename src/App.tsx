@@ -26,8 +26,8 @@ function App() {
       <div className="app-header">
         <div className="header-content">
           <a href="https://socify.io" className="logo-link" target="_blank" rel="noopener noreferrer">
-            {/* Use Group.png placed in the public folder. If it's in src, import instead. */}
-            <img src="/Group.png" alt="Company Logo" className="logo" />
+            {/* Using raw.githubusercontent URL because Group.png is at the repo root */}
+            <img src="https://raw.githubusercontent.com/elvinhatamov/socify_quiz/main/Group.png" alt="Company Logo" className="logo" />
             <span className="logo-text">Socify</span>
           </a>
           <div className="header-text">
