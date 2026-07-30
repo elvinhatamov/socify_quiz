@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { resultsData } from '../data/resultsData'
 import './Results.css'
 
@@ -8,6 +8,9 @@ interface ResultsProps {
 }
 
 export default function Results({ answers, onRetake }: ResultsProps) {
+  const [email, setEmail] = useState('')
+  const [emailSubmitted, setEmailSubmitted] = useState(false)
+
   const totalScore = useMemo(() => {
     return Object.values(answers).reduce((sum, points) => sum + points, 0)
   }, [answers])
@@ -19,14 +22,30 @@ export default function Results({ answers, onRetake }: ResultsProps) {
     return resultsData.trustLeader
   }, [totalScore])
 
+  const handleEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (email) {
+      // Here you would send the email to your backend
+      console.log('Email submitted:', email, 'Score:', totalScore)
+      setEmailSubmitted(true)
+      setTimeout(() => setEmailSubmitted(false), 3000)
+    }
+  }
+
+  const handleBookDemo = () => {
+    window.open('https://socify.io/demo', '_blank')
+  }
+
   return (
     <div className="results-container">
       <div className="results-card">
         {/* Header with Score */}
         <div className="results-header">
           <div className="score-badge">
-            <div className="score-number">{totalScore}</div>
-            <div className="score-max">/ 40</div>
+            <div className="score-circle">
+              <div className="score-number">{totalScore}</div>
+              <div className="score-max">/ 40</div>
+            </div>
           </div>
           <h1 className="results-title">{result.title}</h1>
           <p className="results-subtitle">{result.subtitle}</p>
@@ -52,25 +71,41 @@ export default function Results({ answers, onRetake }: ResultsProps) {
 
         {/* CTA Buttons */}
         <div className="results-actions">
-          <button className="action-button primary-button" onClick={onRetake}>
-            Retake Quiz
+          <button className="action-button primary-button" onClick={handleBookDemo}>
+            📅 Book Demo
           </button>
-          <button className="action-button secondary-button">
-            Get Full Assessment
+          <button className="action-button secondary-button" onClick={onRetake}>
+            Retake Quiz
           </button>
         </div>
 
-        {/* Email Capture (Optional) */}
+        {/* Email Capture */}
         <div className="email-section">
-          <p className="email-prompt">Get your results and SOC 2 checklist:</p>
-          <div className="email-input-group">
+          <p className="email-prompt">Get your personalized SOC 2 roadmap:</p>
+          <form onSubmit={handleEmailSubmit} className="email-form">
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="your@company.com"
               className="email-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
-            <button className="email-submit-button">Send Results</button>
-          </div>
+            <button type="submit" className="email-submit-button">
+              Send Results
+            </button>
+          </form>
+          {emailSubmitted && (
+            <p className="email-success">✓ Results sent! Check your email.</p>
+          )}
+        </div>
+
+        {/* Footer CTA */}
+        <div className="results-footer">
+          <p className="footer-cta">Ready to strengthen your security posture?</p>
+          <button className="book-demo-button" onClick={handleBookDemo}>
+            Book Demo with Socify
+          </button>
         </div>
       </div>
     </div>

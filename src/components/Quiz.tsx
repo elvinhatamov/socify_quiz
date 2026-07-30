@@ -27,6 +27,17 @@ export default function Quiz({ onComplete }: QuizProps) {
     }
   }
 
+  const handleNext = () => {
+    if (currentQuestion < quizData.length - 1) {
+      setCurrentQuestion(currentQuestion + 1)
+    }
+  }
+
+  const handleSubmit = () => {
+    const newAnswers = answers
+    onComplete(newAnswers)
+  }
+
   const question = quizData[currentQuestion]
   const isAnswered = currentQuestion in answers
   const progress = ((currentQuestion + 1) / quizData.length) * 100
@@ -79,17 +90,23 @@ export default function Quiz({ onComplete }: QuizProps) {
             ← Previous
           </button>
 
-          <button
-            className={`nav-button next-button ${isAnswered ? 'enabled' : 'disabled'}`}
-            onClick={() => {
-              if (currentQuestion < quizData.length - 1) {
-                setCurrentQuestion(currentQuestion + 1)
-              }
-            }}
-            disabled={!isAnswered}
-          >
-            {currentQuestion === quizData.length - 1 ? 'Submit' : 'Next →'}
-          </button>
+          {currentQuestion === quizData.length - 1 ? (
+            <button
+              className={`nav-button next-button ${isAnswered ? 'enabled' : 'disabled'}`}
+              onClick={handleSubmit}
+              disabled={!isAnswered}
+            >
+              Submit Quiz
+            </button>
+          ) : (
+            <button
+              className={`nav-button next-button ${isAnswered ? 'enabled' : 'disabled'}`}
+              onClick={handleNext}
+              disabled={!isAnswered}
+            >
+              Next →
+            </button>
+          )}
         </div>
       </div>
     </div>
